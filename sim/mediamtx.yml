@@ -1,0 +1,36 @@
+# MediaMTX camera simulator: publishes test-pattern RTSP streams so the lab runs without real cameras.
+# Each camera has a main stream (720p, 10 fps, for recording) and a substream (360p, 5 fps, for detection),
+# like a real IP camera. parking_lot is deliberately missing, to show how an offline camera looks.
+logLevel: warn
+rtsp: yes
+protocols: [tcp]
+rtspAddress: :8554
+rtmp: no
+hls: no
+webrtc: no
+srt: no
+
+pathDefaults:
+  runOnInitRestart: yes
+
+paths:
+  gate_entrance/main:
+    runOnInit: ffmpeg -hide_banner -loglevel error -re -f lavfi -i testsrc2=size=1280x720:rate=10 -c:v libx264 -preset ultrafast -tune zerolatency -g 20 -f rtsp rtsp://localhost:$RTSP_PORT/$MTX_PATH
+  gate_entrance/sub:
+    runOnInit: ffmpeg -hide_banner -loglevel error -re -f lavfi -i testsrc2=size=640x360:rate=5 -c:v libx264 -preset ultrafast -tune zerolatency -g 10 -f rtsp rtsp://localhost:$RTSP_PORT/$MTX_PATH
+  loading_dock/main:
+    runOnInit: ffmpeg -hide_banner -loglevel error -re -f lavfi -i testsrc2=size=1280x720:rate=10 -c:v libx264 -preset ultrafast -tune zerolatency -g 20 -f rtsp rtsp://localhost:$RTSP_PORT/$MTX_PATH
+  loading_dock/sub:
+    runOnInit: ffmpeg -hide_banner -loglevel error -re -f lavfi -i testsrc2=size=640x360:rate=5 -c:v libx264 -preset ultrafast -tune zerolatency -g 10 -f rtsp rtsp://localhost:$RTSP_PORT/$MTX_PATH
+  yard_north/main:
+    runOnInit: ffmpeg -hide_banner -loglevel error -re -f lavfi -i testsrc2=size=1280x720:rate=10 -c:v libx264 -preset ultrafast -tune zerolatency -g 20 -f rtsp rtsp://localhost:$RTSP_PORT/$MTX_PATH
+  yard_north/sub:
+    runOnInit: ffmpeg -hide_banner -loglevel error -re -f lavfi -i testsrc2=size=640x360:rate=5 -c:v libx264 -preset ultrafast -tune zerolatency -g 10 -f rtsp rtsp://localhost:$RTSP_PORT/$MTX_PATH
+  warehouse_aisle/main:
+    runOnInit: ffmpeg -hide_banner -loglevel error -re -f lavfi -i testsrc2=size=1280x720:rate=10 -c:v libx264 -preset ultrafast -tune zerolatency -g 20 -f rtsp rtsp://localhost:$RTSP_PORT/$MTX_PATH
+  warehouse_aisle/sub:
+    runOnInit: ffmpeg -hide_banner -loglevel error -re -f lavfi -i testsrc2=size=640x360:rate=5 -c:v libx264 -preset ultrafast -tune zerolatency -g 10 -f rtsp rtsp://localhost:$RTSP_PORT/$MTX_PATH
+  office_lobby/main:
+    runOnInit: ffmpeg -hide_banner -loglevel error -re -f lavfi -i testsrc2=size=1280x720:rate=10 -c:v libx264 -preset ultrafast -tune zerolatency -g 20 -f rtsp rtsp://localhost:$RTSP_PORT/$MTX_PATH
+  office_lobby/sub:
+    runOnInit: ffmpeg -hide_banner -loglevel error -re -f lavfi -i testsrc2=size=640x360:rate=5 -c:v libx264 -preset ultrafast -tune zerolatency -g 10 -f rtsp rtsp://localhost:$RTSP_PORT/$MTX_PATH

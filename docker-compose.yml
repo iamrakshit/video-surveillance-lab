@@ -1,0 +1,34 @@
+# Frigate NVR. Real cameras:      docker compose up -d
+# Simulated cameras (no hardware): FRIGATE_CONFIG=./frigate/config.sim.yml docker compose --profile sim up -d
+services:
+  frigate:
+    image: ghcr.io/blakeblackshear/frigate:0.18.2
+    container_name: frigate
+    restart: unless-stopped
+    stop_grace_period: 30s
+    shm_size: "256mb"            # 6 cameras at 640x360 detect; Frigate's stats show the real requirement
+    # devices:
+    #   - /dev/dri/renderD128:/dev/dri/renderD128   # Intel iGPU: hardware decode + OpenVINO detector
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ${FRIGATE_CONFIG:-./frigate/config.yml}:/config/config.yml
+      - ./frigate-data/config:/config/data
+      - ${RECORDINGS_DIR:-./frigate-data/media}:/media/frigate
+      - type: tmpfs                 # recording segments are written to RAM first, then moved to disk
+        target: /tmp/cache
+        tmpfs:
+          size: 1000000000
+    ports:
+      - "8971:8971"                 # authenticated UI and API: the only port reachable from other VLANs
+      - "127.0.0.1:5000:5000"       # unauthenticated API: bound to localhost for the health check only
+    env_file: .env
+
+  camsim:
+    profiles: [sim]
+    image: bluenviron/mediamtx:1.9.3-ffmpeg
+    container_name: camsim
+    restart: unless-stopped
+    volumes:
+      - ./sim/mediamtx.yml:/mediamtx.yml:ro
+    ports:
+      - "127.0.0.1:8554:8554"

@@ -1,0 +1,112 @@
+# Simulator version of config.yml: same settings, but cameras come from the MediaMTX simulator (sim/mediamtx.yml).
+# Used with: docker compose --profile sim up
+# Validated against Frigate 0.18.2's config model (tests/validate_frigate_config.py).
+
+mqtt:
+  enabled: false
+
+detectors:
+  cpu1:
+    type: cpu          # fine for a lab; use openvino (Intel iGPU) or a Coral for more than a few cameras
+
+ffmpeg:
+  output_args:
+    record: preset-record-generic-audio-aac
+  input_args: preset-rtsp-generic   # RTSP over TCP: avoids smeared frames from UDP packet loss
+
+detect:
+  width: 640           # detect on the substream: about 1/9 the CPU of 1080p
+  height: 360
+  fps: 5
+
+motion:
+  threshold: 30
+  contour_area: 15
+
+record:
+  enabled: true
+  expire_interval: 60
+  continuous:
+    days: 0            # no 24/7 footage by default
+  motion:
+    days: 7            # keep any segment with motion for 7 days
+  alerts:              # person/car events: kept 30 days, with 5 s before and after
+    pre_capture: 5
+    post_capture: 5
+    retain:
+      days: 30
+      mode: motion
+  detections:
+    pre_capture: 5
+    post_capture: 5
+    retain:
+      days: 14
+      mode: motion
+
+snapshots:
+  enabled: true
+  retain:
+    default: 14
+
+cameras:
+  gate_entrance:
+    ffmpeg:
+      inputs:
+        - path: rtsp://camsim:8554/gate_entrance/main
+          roles: [record]
+        - path: rtsp://camsim:8554/gate_entrance/sub
+          roles: [detect]
+    objects:
+      track: [person, car]
+  loading_dock:
+    ffmpeg:
+      inputs:
+        - path: rtsp://camsim:8554/loading_dock/main
+          roles: [record]
+        - path: rtsp://camsim:8554/loading_dock/sub
+          roles: [detect]
+    objects:
+      track: [person, car]
+  yard_north:
+    ffmpeg:
+      inputs:
+        - path: rtsp://camsim:8554/yard_north/main
+          roles: [record]
+        - path: rtsp://camsim:8554/yard_north/sub
+          roles: [detect]
+    objects:
+      track: [person, car]
+  warehouse_aisle:
+    ffmpeg:
+      inputs:
+        - path: rtsp://camsim:8554/warehouse_aisle/main
+          roles: [record]
+        - path: rtsp://camsim:8554/warehouse_aisle/sub
+          roles: [detect]
+    objects:
+      track: [person]
+  office_lobby:
+    ffmpeg:
+      inputs:
+        - path: rtsp://camsim:8554/office_lobby/main
+          roles: [record]
+        - path: rtsp://camsim:8554/office_lobby/sub
+          roles: [detect]
+    objects:
+      track: [person]
+  parking_lot:
+    ffmpeg:
+      inputs:
+        - path: rtsp://camsim:8554/parking_lot/main
+          roles: [record]
+        - path: rtsp://camsim:8554/parking_lot/sub
+          roles: [detect]
+    objects:
+      track: [person, car]
+    motion:
+      mask:
+        street_edge:
+          friendly_name: "Street traffic beyond the fence"
+          # Relative coordinates. Use 0.999, not 1.000: Frigate compares the text to "1.0", reads "1.000" as
+          # a pixel value and fails to load (found while validating this file).
+          coordinates: "0.000,0.000,0.999,0.000,0.999,0.120,0.000,0.120"

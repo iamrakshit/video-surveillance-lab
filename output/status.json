@@ -1,0 +1,141 @@
+{
+  "site": "Distribution Centre (lab)",
+  "checked": "2026-11-12 09:30 EST",
+  "warnings": [
+    "Recordings disk 12% free (223 GiB of 1863 GiB)"
+  ],
+  "cameras": [
+    {
+      "name": "gate_entrance",
+      "label": "Gate entrance",
+      "ip": "10.30.0.11",
+      "status": "OK",
+      "reason": "h264 640x360, Frigate 5 fps",
+      "runbook": "",
+      "stream": {
+        "ok": true,
+        "codec": "h264",
+        "width": 640,
+        "height": 360,
+        "fps": 5.0,
+        "error": ""
+      },
+      "frigate": {
+        "camera_fps": 5.0,
+        "expected_fps": 5.0,
+        "skipped_fps": 0.0,
+        "connection_quality": "excellent",
+        "reconnects_last_hour": 0
+      }
+    },
+    {
+      "name": "loading_dock",
+      "label": "Loading dock",
+      "ip": "10.30.0.12",
+      "status": "OK",
+      "reason": "h264 640x360, Frigate 5 fps",
+      "runbook": "",
+      "stream": {
+        "ok": true,
+        "codec": "h264",
+        "width": 640,
+        "height": 360,
+        "fps": 5.0,
+        "error": ""
+      },
+      "frigate": {
+        "camera_fps": 5.0,
+        "expected_fps": 5.0,
+        "skipped_fps": 0.0,
+        "connection_quality": "excellent",
+        "reconnects_last_hour": 0
+      }
+    },
+    {
+      "name": "yard_north",
+      "label": "Yard north",
+      "ip": "10.30.0.13",
+      "status": "DEGRADED",
+      "reason": "Frigate receiving 2.1 of 5 fps, 7 reconnects in the last hour",
+      "runbook": "stream-stutters-or-drops-frames",
+      "stream": {
+        "ok": true,
+        "codec": "h264",
+        "width": 640,
+        "height": 360,
+        "fps": 5.0,
+        "error": ""
+      },
+      "frigate": {
+        "camera_fps": 2.1,
+        "expected_fps": 5.0,
+        "skipped_fps": 0.0,
+        "connection_quality": "poor",
+        "reconnects_last_hour": 7
+      }
+    },
+    {
+      "name": "warehouse_aisle",
+      "label": "Warehouse aisle",
+      "ip": "10.30.0.14",
+      "status": "NOT_RECEIVING",
+      "reason": "Stream OK but Frigate is receiving no frames",
+      "runbook": "stream-ok-but-frigate-not-receiving",
+      "stream": {
+        "ok": true,
+        "codec": "h264",
+        "width": 640,
+        "height": 360,
+        "fps": 5.0,
+        "error": ""
+      },
+      "frigate": {
+        "camera_fps": 0.0,
+        "expected_fps": 5.0,
+        "skipped_fps": 0.0,
+        "connection_quality": "unusable",
+        "reconnects_last_hour": 60
+      }
+    },
+    {
+      "name": "office_lobby",
+      "label": "Office lobby",
+      "ip": "10.30.0.15",
+      "status": "OK",
+      "reason": "h264 640x360, Frigate 5 fps",
+      "runbook": "",
+      "stream": {
+        "ok": true,
+        "codec": "h264",
+        "width": 640,
+        "height": 360,
+        "fps": 5.0,
+        "error": ""
+      },
+      "frigate": {
+        "camera_fps": 5.0,
+        "expected_fps": 5.0,
+        "skipped_fps": 0.0,
+        "connection_quality": "excellent",
+        "reconnects_last_hour": 0
+      }
+    },
+    {
+      "name": "parking_lot",
+      "label": "Parking lot",
+      "ip": "10.30.0.16",
+      "status": "OFFLINE",
+      "reason": "Stream unreachable: stream path not found",
+      "runbook": "camera-offline",
+      "stream": {
+        "ok": false,
+        "codec": "",
+        "width": 0,
+        "height": 0,
+        "fps": 0.0,
+        "error": "rtsp://127.0.0.1:8554/parking_lot/sub: Server returned 400 Bad Request"
+      },
+      "frigate": {}
+    }
+  ]
+}

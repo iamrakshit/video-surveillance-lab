@@ -1,0 +1,28 @@
+# Site definition for camhealth.py: where Frigate is, how to reach each camera, and where it sits on the map.
+site:
+  name: Distribution Centre (lab)
+  frigate_api: http://127.0.0.1:5000/api        # unauthenticated port, bound to localhost in docker-compose.yml
+  # {ip} and {name} are filled per camera; ${VAR} comes from the environment (.env). Probes the substream: lighter.
+  rtsp_url: rtsp://${CAM_RTSP_USER}:${CAM_RTSP_PASSWORD}@{ip}:554/stream2
+  degraded_fps_ratio: 0.6        # Frigate receiving < 60% of the configured detect fps = degraded
+  storage_warn_percent: 15       # warn when the recordings disk has < 15% free
+
+map:                             # floor plan in map units (drawn as SVG); heading 0 = north, clockwise
+  width: 900
+  height: 560
+  perimeter: [[40, 40], [860, 40], [860, 520], [40, 520]]
+  areas:
+    - {name: Warehouse, x: 300, y: 110, w: 380, h: 250}
+    - {name: Office, x: 680, y: 110, w: 140, h: 130}
+    - {name: Loading dock, x: 300, y: 360, w: 380, h: 50}
+    - {name: Yard, x: 80, y: 80, w: 190, h: 280}
+    - {name: Parking, x: 560, y: 430, w: 260, h: 70}
+  gate: [[40, 440], [40, 500]]
+
+cameras:
+  - {name: gate_entrance,   label: Gate entrance,   ip: 10.30.0.11, x: 70,  y: 470, heading: 60,  fov: 80, range: 130}
+  - {name: loading_dock,    label: Loading dock,    ip: 10.30.0.12, x: 490, y: 418, heading: 180, fov: 100, range: 110}
+  - {name: yard_north,      label: Yard north,      ip: 10.30.0.13, x: 175, y: 70,  heading: 180, fov: 80, range: 170}
+  - {name: warehouse_aisle, label: Warehouse aisle, ip: 10.30.0.14, x: 310, y: 235, heading: 90,  fov: 70, range: 220}
+  - {name: office_lobby,    label: Office lobby,    ip: 10.30.0.15, x: 810, y: 230, heading: 300, fov: 90, range: 100}
+  - {name: parking_lot,     label: Parking lot,     ip: 10.30.0.16, x: 845, y: 420, heading: 245, fov: 80, range: 150}

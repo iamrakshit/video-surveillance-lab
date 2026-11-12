@@ -1,0 +1,20 @@
+{
+  "cameras": {
+    "gate_entrance":   {"camera_fps": 5.0, "process_fps": 5.0, "skipped_fps": 0.0, "detection_fps": 0.4, "detection_enabled": true, "pid": 412, "capture_pid": 418, "ffmpeg_pid": 431, "audio_rms": 0.0, "audio_dBFS": 0.0, "connection_quality": "excellent", "expected_fps": 5, "reconnects_last_hour": 0, "stalls_last_hour": 0},
+    "loading_dock":    {"camera_fps": 5.0, "process_fps": 5.0, "skipped_fps": 0.0, "detection_fps": 1.2, "detection_enabled": true, "pid": 413, "capture_pid": 419, "ffmpeg_pid": 432, "audio_rms": 0.0, "audio_dBFS": 0.0, "connection_quality": "excellent", "expected_fps": 5, "reconnects_last_hour": 0, "stalls_last_hour": 1},
+    "yard_north":      {"camera_fps": 2.1, "process_fps": 2.1, "skipped_fps": 0.0, "detection_fps": 0.0, "detection_enabled": true, "pid": 414, "capture_pid": 420, "ffmpeg_pid": 433, "audio_rms": 0.0, "audio_dBFS": 0.0, "connection_quality": "poor", "expected_fps": 5, "reconnects_last_hour": 7, "stalls_last_hour": 38},
+    "warehouse_aisle": {"camera_fps": 0.0, "process_fps": 0.0, "skipped_fps": 0.0, "detection_fps": 0.0, "detection_enabled": true, "pid": 415, "capture_pid": 421, "ffmpeg_pid": null, "audio_rms": 0.0, "audio_dBFS": 0.0, "connection_quality": "unusable", "expected_fps": 5, "reconnects_last_hour": 60, "stalls_last_hour": 0},
+    "office_lobby":    {"camera_fps": 5.0, "process_fps": 5.0, "skipped_fps": 0.0, "detection_fps": 0.2, "detection_enabled": true, "pid": 416, "capture_pid": 422, "ffmpeg_pid": 434, "audio_rms": 0.0, "audio_dBFS": 0.0, "connection_quality": "excellent", "expected_fps": 5, "reconnects_last_hour": 0, "stalls_last_hour": 0},
+    "parking_lot":     {"camera_fps": 0.0, "process_fps": 0.0, "skipped_fps": 0.0, "detection_fps": 0.0, "detection_enabled": true, "pid": 417, "capture_pid": 423, "ffmpeg_pid": null, "audio_rms": 0.0, "audio_dBFS": 0.0, "connection_quality": "unusable", "expected_fps": 5, "reconnects_last_hour": 58, "stalls_last_hour": 0}
+  },
+  "detectors": {"cpu1": {"inference_speed": 48.3, "detection_start": 0.0, "pid": 390}},
+  "camera_fps": 22.1, "process_fps": 22.1, "skipped_fps": 0.0, "detection_fps": 1.8,
+  "service": {
+    "uptime": 86400, "version": "0.18.2", "latest_version": "0.18.2", "last_updated": 1794380400,
+    "storage": {
+      "/media/frigate/recordings": {"total": 1907729.0, "used": 1679801.6, "free": 227927.4, "mount_type": "ext4"},
+      "/media/frigate/clips": {"total": 1907729.0, "used": 1679801.6, "free": 227927.4, "mount_type": "ext4"},
+      "/tmp/cache": {"total": 953.7, "used": 41.2, "free": 912.5, "mount_type": "tmpfs"}
+    }
+  }
+}

@@ -1,0 +1,12 @@
+[Unit]
+Description=Camera health check (Frigate API + RTSP probe)
+After=network-online.target docker.service
+
+[Service]
+Type=oneshot
+User=nvr
+WorkingDirectory=/opt/video-surveillance-lab
+EnvironmentFile=/opt/video-surveillance-lab/.env
+ExecStart=/usr/bin/python3 healthcheck/camhealth.py --out /var/www/camhealth
+# Exit code 2 (camera down) still counts as a completed check, not a failed unit
+SuccessExitStatus=1 2
